@@ -54,12 +54,12 @@ menu:
     url:               /projects/
     submenu:
       - title:         BankMate
-        url:           /BankMate
+        url:           /BankMate/
   - title:             Example
     url:               /example/
     submenu:
       - title:         example
-        url:           /example
+        url:           /example/
 
 
 # Add links to the footer.
