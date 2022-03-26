@@ -1,19 +1,24 @@
 ---
+# Featured tags need to have either the `list` or `grid` layout (PRO only).
 layout: list
-bigtitle: example
+
+# The title of the tag's page.
+title: example
+
+# The name of the tag, used in a post's front matter (e.g. tags: [<slug>]).
 slug: example
-menu: true
-submenu: true
+
+# (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  예시파일 1
+  예시
+
+# (Optional) You can disable grouping posts by date.
+# no_groups: true
+
+# Exclude this example category from the sitemap.
+# DON'T USE THIS SETTING IN YOUR CATEGORIES!
+sitemap: false
 ---
 
-# 예시입니다
+# 예시
 <!-- 이게 타이틀이다 -->
-
-## 카테고리
-
-* [Example1]{:.heading.flip-title} --- 연습용임돠
-
-
-[Example1]: /Example1/

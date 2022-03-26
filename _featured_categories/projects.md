@@ -1,19 +1,21 @@
 ---
+# Featured tags need to have either the `list` or `grid` layout (PRO only).
 layout: list
-bigtitle: projects
+
+# The title of the tag's page.
+title: projects
+
+# The name of the tag, used in a post's front matter (e.g. tags: [<slug>]).
 slug: projects
-menu: true
-submenu: true
+
+# (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  프로젝트 모음
+  프로젝트 목록
+
+# (Optional) You can disable grouping posts by date.
+# no_groups: true
+
+# Exclude this example category from the sitemap.
+# DON'T USE THIS SETTING IN YOUR CATEGORIES!
+sitemap: false
 ---
-
-# Projects
-<!-- 이게 타이틀이다 -->
-
-## 카테고리
-
-* [BankMate]{:.heading.flip-title} --- Fn 이노에듀 인공지능 창의 융합형 인재양성과정 파이널 프로젝트입니다.(대상 수상작)
-
-
-[BankMate]: /BankMate/

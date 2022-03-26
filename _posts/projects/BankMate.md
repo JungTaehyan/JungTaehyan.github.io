@@ -1,19 +1,16 @@
 ---
-layout: list
-category: projects
-bigtitle: BankMate
-slug: BankMate
+layout: post
+title: BankMate
+sitemap: false
 description: >
-  안면인증과 업무용 챗봇을 활용한 인공지능 창의 융합형 인재양성과정 파이널 프로젝트 - BankMate(대상작)
-
-related_posts:
-    - 
-list: true
-order: 1
+        Project - BankMate 
+categories:
+    - projects
 ---
 
-# Bankmate(대상작)
+# Project - BankMate(대상작)
 
+---
 # 0. 프로젝트 개요
 
 - **소속 교육기관: (주)에프앤이노에듀**
@@ -26,8 +23,8 @@ order: 1
 
 - **프로젝트 담당 부분**
     - 프로젝트 기획
-    - 챗봇 데이터 수집 및 전처리
-    - Django를 이용한 Chatbot 구현
+    - 1D CNN을 사용한 챗봇 모델 생성
+    - Django를 이용한 VGG FACE 안면인증 시스템 및 Chabot 서비스를 홈페이지에 구현
 
 
 - **프로젝트 기획 배경**
@@ -36,60 +33,60 @@ order: 1
 
 # 1. 프로젝트 구현배경
 
-![](/assets/img/BankMate/slide7.JPG)
+![](/assets/BankMate/slide7.JPG)
 
-![](/assets/img/BankMate/slide8.JPG)
+![](/assets/BankMate/slide8.JPG)
 
 # 2. 현황분석
 
-![](/assets/img/BankMate/slide10.JPG)
+![](/assets/BankMate/slide10.JPG)
 
-![](/assets/img/BankMate/slide11.JPG)
+![](/assets/BankMate/slide11.JPG)
 
 # 3. 안면인증 구현과정
 
 ### 1) VGGFACE 선정 이유
 
-![](/assets/img/BankMate/slide13.JPG)
+![](/assets/BankMate/slide13.JPG)
 
 ### 2) 안면인증 파이프라인
 
-![](/assets/img/BankMate/slide14.JPG)
+![](/assets/BankMate/slide14.JPG)
 
 ### 3) 안면인증 코드 구현
 
-![](/assets/img/BankMate/slide15.JPG)
-![](/assets/img/BankMate/slide16.JPG)
+![](/assets/BankMate/slide15.JPG)
+![](/assets/BankMate/slide16.JPG)
 
 # 4. 챗봇 구현과정
 
 ### 1) 챗봇 모델
 
-![](/assets/img/BankMate/slide18.JPG)
+![](/assets/BankMate/slide18.JPG)
 * BankMate 챗봇은 업무 수행이라는 한정된 대화 범위 안에서 사용자가 원하는 목적을 달성하기 위한 챗봇이기 때문에 close domain에 속함.
 
 ### 2) 챗봇 파이프라인
-![](/assets/img/BankMate/slide20.JPG)
+![](/assets/BankMate/slide20.JPG)
 
 ### 3) 챗봇 지식범위 및 분류 체계
-![](/assets/img/BankMate/slide21.JPG)
+![](/assets/BankMate/slide21.JPG)
 
 * BankMate에 필요한 인텐트와 답변부분은 전직 은행원이었던 조원 2명을 통해 수집함.
 
 ### 4) KoNLPy Kkma
 
 
-![](/assets/img/BankMate/slide19.JPG)
+![](/assets/BankMate/slide19.JPG)
 
 * 챗봇 자연어 처리를 위해 KoNLPy Kkma 형태소 분석기를 사용함.
 * 문자가 많을수록 실행시간이 증가하는 단점이 있지만, 수집한 데이터를 가장 정확하게 분석해 주기 때문에 선택함.
 
-![](/assets/img/BankMate/slide22.JPG)
+![](/assets/BankMate/slide22.JPG)
 
 * Kkma 딕셔너리의 경우 기존의 명사 사전이 은행 업무 용어를 포함하지 않는 경우가 많아 새로 업무용 딕셔너리를 작성, 적용함.
 
 ### 5) 복합어 후처리
-![](/assets/img/BankMate/slide23.JPG)
+![](/assets/BankMate/slide23.JPG)
 
 * 데이터를 증대하고 띄어쓰기, 오타를 방지하기 위해 복합어 처리를 진행함.
 * synonym 사전을 새로 만들어 중요 업무 용어에 대해 유의어를 정의함.
@@ -129,14 +126,18 @@ def synonym_replacement(words, n):
             num_replaced += 1
         if num_replaced >= n:
             break
+
     return new_words
+
 def get_synonyms(word):
     synomyms = []
+
     try:
         for syn in synonym_dict[word]:
                 synomyms.append(syn)
     except:
         pass
+
     return synomyms
 ```
 
@@ -151,6 +152,8 @@ with open("data\synonym.csv",'r', encoding="UTF-8") as f:
         while '' in lines:
                 lines.remove('') # '' 삭제
         synonym_dict[lines[0]] = lines[1:]
+
+
 tokenized_expand_data=list()
 f = open("data\save.csv", 'r', encoding='utf-8')
 rea = csv.reader(f)
@@ -159,6 +162,7 @@ for row in rea:
         row.remove('') # '' 삭제
     tokenized_expand_data.append(row)
 f.close
+
 label_expand_data=list()
 f = open("data\save2.csv", 'r', encoding='utf-8')
 rea = csv.reader(f)
@@ -167,6 +171,7 @@ for row in rea:
         row.remove('') # '' 삭제
     label_expand_data.append(row)
 f.close
+
 def csv2list(filename):
     import csv
     file = open(filename, 'r', encoding="UTF-8")
@@ -175,13 +180,14 @@ def csv2list(filename):
     for items in csvfile:
         lists.append(items)
     return lists
+
 tokenized_data = csv2list('data\kkma_tokenized_data.csv')
 tokenized_nouns = csv2list('data\kkma_tokenized_nouns.csv')
 ```
 
 ### 6) Tokenizing & Word2Vec
 
-![](/assets/img/BankMate/slide24.JPG)
+![](/assets/BankMate/slide24.JPG)
 
 * 새로 정의된 사전을 바탕으로 문장을 꼬꼬마 토크나이저를 사용해 토큰화함.
 * 이 때 문장을 명사만 토큰화한 데이터, 문장 전체를 토큰화한 데이터로 나누어 저장했음.
@@ -197,7 +203,7 @@ model_wv = Word2Vec(sentences = tokenized_expand_data, vector_size = 100, window
 
 ### 7) 1D CNN모델 생성
 
-![](/assets/img/BankMate/slide25.JPG)
+![](/assets/BankMate/slide25.JPG)
 
 * 1D CNN 모델의 구성은 인풋 레이어, 임베딩 레이어, 사이즈 [1, 3, 3]의 컨볼루션 레이어 3개로 구성되어 있음.
 * 각 벡터에 대해 맥스 풀링을 한 후에는 스칼라 값을 얻는데, 이렇게 얻은 스칼라값들은 전부 연결(concatenate)하여 하나의 벡터로 만들어줌.
@@ -211,6 +217,7 @@ model_wv = Word2Vec(sentences = tokenized_expand_data, vector_size = 100, window
 train_data=[]
 for i in range(0, len(tokenized_expand_data)):
     train_data.append(' '.join(tokenized_expand_data[i]))
+
 label_data = pd.read_csv('data\\bankmate_train2.csv', encoding="UTF-8")['label']
 label_data = label_data.tolist()
 ```
@@ -222,18 +229,24 @@ idx_encode = preprocessing.LabelEncoder()
 idx_encode.fit(label_expand_data)
 label_expand_data = idx_encode.transform(label_expand_data) # 주어진 고유한 정수로 변환
 label_idx = dict(zip(list(idx_encode.classes_), idx_encode.transform(list(idx_encode.classes_))))
+
 tokenizer = Tokenizer(oov_token="OOV")
 tokenizer.fit_on_texts(train_data)
 sequences = tokenizer.texts_to_sequences(train_data)
+
 word_index = tokenizer.word_index
 vocab_size = len(word_index) + 2
+
 max_len = 17
 question_train = pad_sequences(sequences, maxlen = max_len)
+
 indices = np.arange(question_train.shape[0])
 np.random.seed(1103)
 np.random.shuffle(indices)
+
 question_train = question_train[indices]
 label_train = label_expand_data[indices]
+
 n_of_val = int(0.2 * question_train.shape[0])
 ```
 
@@ -250,8 +263,10 @@ X_train = question_train[:-n_of_val]
 y_train = label_train[:-n_of_val]
 X_val = question_train[-n_of_val:]
 y_val = label_train[-n_of_val:]
+
 embedding_dim = 100
 embedding_matrix = np.zeros((vocab_size, embedding_dim))
+
 for i in range(len(model_wv.wv.vectors)):
     embedding_vector = model_wv.wv.vectors[i]
     if embedding_vector is not None:
@@ -265,19 +280,24 @@ kernel_sizes = [1, 3, 3]
 num_filters = 512
 dropout_ratio = 0.5
 np.random.seed(1103)
+
 model_input = Input(shape=(max_len,))
 output = Embedding(vocab_size, embedding_dim, weights=[embedding_matrix],
                       input_length=max_len, trainable=False)(model_input)
+
 conv_blocks = []
+
 for size in kernel_sizes:
     conv = Conv1D(filters=num_filters, kernel_size=size, padding="valid",
                   activation="relu", strides=1)(output)
     conv = GlobalMaxPooling1D()(conv)
     conv_blocks.append(conv)
+
 output = Concatenate()(conv_blocks) if len(conv_blocks) > 1 else conv_blocks[0]
 output = Dropout(dropout_ratio)(output)
 model_output = Dense(len(label_train), activation='softmax')(output)
 model = Model(model_input, model_output)
+
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
 # 구성 끝
 ```
@@ -316,6 +336,7 @@ history = model.fit(X_train, y_train,
 
 ```python
 plt.figure(figsize=(16, 5))
+
 plt.subplot(1,2,1)
 epochs = range(1, len(history.history['acc']) + 1)
 plt.plot(epochs, history.history['acc'])
@@ -324,6 +345,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epochs')
 plt.legend(['train', 'test'], loc='lower right')
+
 plt.subplot(1,2,2)
 epochs = range(1, len(history.history['loss']) + 1)
 plt.plot(epochs, history.history['loss'])
@@ -332,15 +354,16 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epochs')
 plt.legend(['train', 'test'], loc='upper right')
+
 plt.show()
 ```
 
-![](/assets/img/BankMate/outcome.png)
+![](/assets/BankMate/outcome.png)
 
 
 ### 8) 답변 처리 과정
-![](/assets/img/BankMate/slide26.JPG)
-![](/assets/img/BankMate/slide27.JPG)
+![](/assets/BankMate/slide26.JPG)
+![](/assets/BankMate/slide27.JPG)
 
 * 답변 처리는 두가지 경우로 분류함. 
      * 입력된 질문을 명사만 토큰화했을 때, 데이터 베이스에 일치하는 문장이 있다면, 이에 해당하는 인텐트를 출력, 답변을 찾아서 반환하도록 했음.
